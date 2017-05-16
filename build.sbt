@@ -5,7 +5,7 @@ name := "vault"
 lazy val uscalaVersion = "0.5.1"
 lazy val specs2Version = "3.8.8"
 lazy val circeVersion = "0.7.0"
-lazy val dispatchVersion = "0.11.3"
+lazy val dispatchVersion = "0.12.0"
 lazy val startVaultTask = TaskKey[Unit](
   "startVaultTask",
   "Start dev vault server for integration test"
@@ -47,7 +47,7 @@ val pomInfo = (
 
 lazy val commonSettings = Seq(
   version := "0.4.0",
-  scalaVersion := "2.11.8",
+  scalaVersion := "2.12.2",
   organization := "janstenpickle.vault",
   pomExtra := pomInfo,
   autoAPIMappings := true,
@@ -58,7 +58,9 @@ lazy val commonSettings = Seq(
     "MIT",
     url("https://github.com/janstenpickle/scala-vault/blob/master/LICENSE")
   ),
-  resolvers ++= Seq(Resolver.sonatypeRepo("releases"), Resolver.jcenterRepo),
+  resolvers ++= Seq(Resolver.sonatypeRepo("releases"),
+    Resolver.jcenterRepo,
+    Resolver.bintrayRepo("albertpastrana", "maven")),
   libraryDependencies ++= Seq(
     "net.databinder.dispatch" %% "dispatch-core" % dispatchVersion,
     "org.uscala" %% "uscala-result" % uscalaVersion,
