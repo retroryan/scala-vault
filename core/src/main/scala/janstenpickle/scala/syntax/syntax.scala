@@ -8,6 +8,7 @@ import io.circe.syntax._
 import janstenpickle.vault.core.VaultConfig
 import uscala.concurrent.result.AsyncResult
 import uscala.result.Result
+import org.apache.logging.log4j.LogManager
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -44,14 +45,17 @@ object AsyncResultSyntax {
 
 object VaultConfigSyntax {
 
+  val logger = LogManager.getLogger(VaultConfigSyntax.getClass.getName)
+
   final val VaultTokenHeader = "X-Vault-Token"
 
   implicit class RequestHelper(config: VaultConfig) {
     def authenticatedRequest(path: String)(req: Req => Req)
     (implicit ec: ExecutionContext): AsyncResult[String, Req] =
-      config.token.map[Req](token =>
+      config.token.map[Req] { token =>
+        logger.debug(s"secure request : \n$path")
         req(config.wsClient.path(path).setHeader(VaultTokenHeader, token))
-      )
+      }
   }
 }
 

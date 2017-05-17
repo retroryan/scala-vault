@@ -2,6 +2,7 @@ import sbt.Keys._
 
 name := "vault"
 
+val log4j            = "2.8.2"
 lazy val uscalaVersion = "0.5.1"
 lazy val specs2Version = "3.8.8"
 lazy val circeVersion = "0.7.0"
@@ -68,8 +69,11 @@ lazy val commonSettings = Seq(
     "org.uscala" %% "uscala-result-specs2" % uscalaVersion % "it,test",
     "org.specs2" %% "specs2-core" % specs2Version % "it,test",
     "org.specs2" %% "specs2-scalacheck" % specs2Version % "it,test",
-    "org.specs2" %% "specs2-junit" % specs2Version % "it,test"
-  ),
+    "org.specs2" %% "specs2-junit" % specs2Version % "it,test",
+    "org.apache.logging.log4j" %  "log4j-api"                   % log4j,
+    "org.apache.logging.log4j" %  "log4j-core"                  % log4j,
+    "org.apache.logging.log4j" %  "log4j-slf4j-impl"            % log4j
+),
   libraryDependencies ++= Seq(
     "io.circe" %% "circe-core",
     "io.circe" %% "circe-generic",

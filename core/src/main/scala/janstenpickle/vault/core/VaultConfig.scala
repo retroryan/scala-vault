@@ -42,7 +42,7 @@ object VaultConfig {
       toAsyncResult.
       // scalastyle:off magic.number
       acceptStatusCodes(200).
-      // scalastyle:on magic.number
+      // scfalastyle:on magic.number
       extractFromJson[String](
         _.downField("auth").downField("client_token")
       )
