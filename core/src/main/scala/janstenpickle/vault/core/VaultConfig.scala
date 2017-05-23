@@ -8,6 +8,7 @@ import io.circe.syntax._
 import janstenpickle.scala.syntax.AsyncResultSyntax._
 import janstenpickle.scala.syntax.SyntaxRequest._
 import janstenpickle.scala.syntax.ResponseSyntax._
+import org.apache.logging.log4j.LogManager
 import uscala.concurrent.result.AsyncResult
 
 import scala.concurrent.ExecutionContext
@@ -18,6 +19,9 @@ case class AppId(app_id: String, user_id: String)
 case class AppRole(role_id: String, secret_id: String)
 
 object VaultConfig {
+
+  val logger = LogManager.getLogger(VaultConfig.getClass.getName)
+
 
   @deprecated("Vault 0.6.5 deprecated AppId in favor of AppRole", "0.4.0")
   def apply(client: WSClient, appId: AppId)
@@ -48,8 +52,10 @@ object VaultConfig {
       )
     )
 
-  def apply(wsClient: WSClient, token: String): VaultConfig =
+  def apply(wsClient: WSClient, token: String): VaultConfig = {
+    logger.info(s"creating config client with token: $token")
     VaultConfig(wsClient, AsyncResult.ok[String, String](token))
+  }
 }
 
 
